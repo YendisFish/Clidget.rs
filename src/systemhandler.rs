@@ -18,17 +18,15 @@ pub fn StartupChecks() {
 }
 
 pub fn Installer() {
-    let baseDir: bool = Path::new("/etc/Clidget/").exists();
+    println!("Installing...");
 
-    if baseDir == false {
-        fs::create_dir_all("/etc/Clidget/");
-        fs::create_dir_all("/etc/Clidget/Core/");
-        fs::create_dir_all("/etc/Clidget/Core/Accounts/");
-    }
+    fs::create_dir_all("/etc/Clidget/Core/Accounts/");
 
     let currentPath = env::current_exe().unwrap();
 
     Command::new("mv")
         .arg(currentPath.as_os_str())
         .arg("/usr/bin/");
+
+    println!("Installation finished...");
 }

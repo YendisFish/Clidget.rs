@@ -15,16 +15,13 @@ fn main() {
 
     let mut args: Vec<String> = env::args().collect();
 
-    let mut argsParsed: &str = &args[0][..];
-
-    if args.len() > 0 {
-        match argsParsed {
-            "install" => Installer(),
-            _ => {}
+    if args.len() == 2 {
+        if args.contains(&"install".to_string()) {
+            Installer();
         }
+    } else {
+        MainProgram();
     }
-
-    MainProgram();
 }
 
 fn MainProgram() {
