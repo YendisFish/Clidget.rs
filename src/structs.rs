@@ -13,7 +13,8 @@ pub struct Budget {
 }
 
 pub struct Transaction {
-
+    Title: String,
+    Amount: i128
 }
 
 //Account functions
