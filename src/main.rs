@@ -8,7 +8,7 @@ mod structs;
 pub const CURRENT_OS: String = GetOs();
 
 fn main() {
-    println!("Starting Clidget.rs");
+    println!("Starting Clidget.rs...");
 
     let args: Vec<String> = env::args().collect();
 
