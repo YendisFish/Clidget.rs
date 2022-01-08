@@ -32,5 +32,9 @@ fn main() {
 }
 
 fn MainProgram() {
-    
+    let mut input: String = String::new();
+
+    loop {
+        //Add Logic
+    }
 }
