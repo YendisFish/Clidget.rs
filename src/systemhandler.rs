@@ -1,6 +1,8 @@
 use std::env;
 use std::path::Path;
 use std::fs;
+use std::process;
+use std::process::Command;
 
 pub fn GetOs() -> String {
     let ret: String = String::from(env::consts::OS);
@@ -28,4 +30,10 @@ pub fn Installer() {
         await!(fs::create_dir_all("/etc/Clidget/Core/"));
         await!(fs::create_dir_all("/etc/Clidget/Core/Accounts/"));
     }
+
+    let currentPath: String = String::from(env::current_exe());
+
+    Command::new("mv")
+        .args(currentPath)
+        .args("/usr/bin/").expect("Failed to move file");
 }

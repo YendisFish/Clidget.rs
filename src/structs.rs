@@ -1,20 +1,20 @@
 use serde::{Serialize, Deserialize};
 
 pub struct Account {
-    Name: String,
-    Amount: i128,
-    Budget: Budget,
-    Account_Type: AccountType
+    pub Name: String,
+    pub Amount: i128,
+    pub Budget: Budget,
+    pub Account_Type: AccountType
 }
 
 pub struct Budget {
-    Amount_Initial: i128,
-    Amount_Left: i128
+    pub Amount_Initial: i128,
+    pub Amount_Left: i128
 }
 
 pub struct Transaction {
-    Title: String,
-    Amount: i128
+    pub Title: String,
+    pub Amount: i128
 }
 
 //Account functions

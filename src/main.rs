@@ -1,6 +1,7 @@
 use crate::systemhandler::{GetOs, Installer};
 use std::env;
 use std::io;
+use crate::structs::{Account, Budget};
 
 mod systemhandler;
 mod structs;
@@ -35,6 +36,7 @@ fn MainProgram() {
     let mut input: String = String::new();
 
     loop {
-        //Add Logic
+        print!("Clidget > ");
+        io::stdin().read_line(&mut input);
     }
 }
