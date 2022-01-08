@@ -4,11 +4,6 @@ use std::fs;
 use std::process;
 use std::process::Command;
 
-pub fn GetOs() -> String {
-    let ret: String = String::from(env::consts::OS);
-    return ret;
-}
-
 pub fn StartupChecks() {
     let baseDir: bool = Path::new("/etc/Clidget/").exists();
     let coreDir: bool = Path::new("/etc/Clidget/Core/").exists();
@@ -26,14 +21,14 @@ pub fn Installer() {
     let baseDir: bool = Path::new("/etc/Clidget/").exists();
 
     if baseDir == false {
-        await!(fs::create_dir_all("/etc/Clidget/"));
-        await!(fs::create_dir_all("/etc/Clidget/Core/"));
-        await!(fs::create_dir_all("/etc/Clidget/Core/Accounts/"));
+        fs::create_dir_all("/etc/Clidget/");
+        fs::create_dir_all("/etc/Clidget/Core/");
+        fs::create_dir_all("/etc/Clidget/Core/Accounts/");
     }
 
-    let currentPath: String = String::from(env::current_exe());
+    let currentPath = env::current_exe().unwrap();
 
     Command::new("mv")
-        .args(currentPath)
-        .args("/usr/bin/").expect("Failed to move file");
+        .arg(currentPath.as_os_str())
+        .arg("/usr/bin/");
 }
