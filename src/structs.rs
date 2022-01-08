@@ -1,10 +1,31 @@
-struct Account {
+use serde::{Serialize, Deserialize};
+
+pub struct Account {
     Name: String,
     Amount: i128,
-    Budget: Budget
+    Budget: Budget,
+    Account_Type: AccountType
 }
 
-struct Budget {
+pub struct Budget {
     Amount_Initial: i128,
     Amount_Left: i128
+}
+
+pub struct Transaction {
+
+}
+
+//Account functions
+
+//Budget Functions
+
+//Transaction Functions
+
+//ENUMS AND ENUM FUNCTIONS
+pub enum AccountType {
+    Checking,
+    Savings,
+    Retirement,
+    Roth
 }
