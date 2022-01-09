@@ -2,6 +2,7 @@ use std::borrow::Borrow;
 use serde::{Serialize, Deserialize};
 use serde_json::Value::{Null, String};
 use std::io;
+use std::fs;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Account {
@@ -24,6 +25,13 @@ pub struct Transaction {
 }
 
 //Account functions
+pub fn CreateAccount(accnttocreate: Account) {
+    let parsed: String = AccountToJson(accnttocreate);
+    fs::create_dir_all(&"/etc/Clidget/Core/Accounts/" + &accnttocreate.Name + &"/" + &accnttocreate.Name + &"/" + &".json").expect("ran into error");
+
+    fs::write(&"/etc/Clidget/Core/Accounts/" + &accnttocreate.Name + &"/" + &accnttocreate.Name + &"/" + &".json", &parsed);
+}
+
 pub fn GenerateAccountFromJson(accnt: String) -> Account {
     let mut ret: Account = serde_json::from_str(&accnt).unwrap();
     return ret;
