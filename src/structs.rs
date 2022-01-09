@@ -1,8 +1,8 @@
 use std::borrow::Borrow;
 use serde::{Serialize, Deserialize};
-use serde_json::Value::{Null, String};
 use std::io;
 use std::fs;
+use std::path::PathBuf;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Account {
@@ -25,11 +25,37 @@ pub struct Transaction {
 }
 
 //Account functions
-pub fn CreateAccount(accnttocreate: Account) {
-    let parsed: String = AccountToJson(accnttocreate);
-    fs::create_dir_all(&"/etc/Clidget/Core/Accounts/" + &accnttocreate.Name + &"/" + &accnttocreate.Name + &"/" + &".json").expect("ran into error");
+pub fn ImportAccounts() -> Vec<Account>{
+    let mut dirFiles= fs::read_dir("/etc/Clidget/Core/Accounts/").unwrap();
+    let mut dirStr: Vec<String> = Vec::new();
 
-    fs::write(&"/etc/Clidget/Core/Accounts/" + &accnttocreate.Name + &"/" + &accnttocreate.Name + &"/" + &".json", &parsed);
+    for dir in dirFiles {
+        dirStr.push(String::from(&dir.unwrap().path().into_os_string().into_string().unwrap()));
+    }
+
+    let mut accounts: Vec<Account> = Vec::new();
+
+    for dirname in dirStr {
+        for file in fs::read_dir(dirname).unwrap() {
+            if String::from(&file.as_ref().unwrap().file_name().to_string_lossy().to_string()).contains(".json") {
+                let mut toRead = String::from(file.unwrap().path().to_string_lossy().to_string());
+                let mut toGen = fs::read_to_string(toRead).unwrap();
+
+                accounts.push(GenerateAccountFromJson(toGen));
+            }
+        }
+    }
+
+    return accounts;
+}
+
+pub fn CreateAccount(accnttocreate: Account) {
+    let parsed: String = AccountToJson(&accnttocreate);
+    let mut dirStr: String = "/etc/Clidget/Core/Accounts/".to_string() + &accnttocreate.Name + &"/" + &accnttocreate.Name + &"/".to_string() + &".json";
+
+    fs::create_dir_all(&dirStr).expect("ran into error");
+
+    fs::write(dirStr.to_string(), &parsed);
 }
 
 pub fn GenerateAccountFromJson(accnt: String) -> Account {
@@ -37,7 +63,7 @@ pub fn GenerateAccountFromJson(accnt: String) -> Account {
     return ret;
 }
 
-pub fn AccountToJson(accnt: Account) -> String {
+pub fn AccountToJson(accnt: &Account) -> String {
     let mut ret: String = serde_json::to_string(&accnt).unwrap();
     return ret;
 }
@@ -66,12 +92,17 @@ pub fn GenerateAccountFromInput() -> Account {
     println!("vv Enter the account type vv");
     io::stdin().read_line(&mut typestraccnt);
 
+    let one = String::from("checking");
+    let two = String::from("savings");
+    let three = String::from("retirement");
+    let four = String::from("roth");
+
     match typestraccnt.to_lowercase() {
-        String::from("checking") => accndtpe = AccountType::Checking,
-        String::from("savings") => accndtpe = AccountType::Savings,
-        String::from("retirement") => accndtpe = AccountType::Retirement,
-        String::from("roth") => accndtpe = AccountType::Roth,
-        _ => AccountType::EMPTY
+        one => accndtpe = AccountType::Checking,
+        two => accndtpe = AccountType::Savings,
+        three => accndtpe = AccountType::Retirement,
+        four => accndtpe = AccountType::Roth,
+        _ => {}
     }
 
     let ret: Account = Account {
@@ -80,6 +111,8 @@ pub fn GenerateAccountFromInput() -> Account {
         Budget: bdgt,
         Account_Type: accndtpe
     };
+
+    return ret;
 }
 
 //Budget Functions

@@ -28,11 +28,11 @@ fn MainProgram() {
     let mut input: String = String::new();
 
     loop {
-        println!("vv Clidget [list to list commands] vv");
+        println!("vv Clidget [help to list commands] vv");
         io::stdin().read_line(&mut input);
 
         match input.to_lowercase().trim() {
-            "list" => ListCommands(),
+            "help" => ListCommands(),
             "select-account" => println!("PUT FUNCTION HERE"),
             _ => {}
         }
@@ -42,7 +42,7 @@ fn MainProgram() {
 }
 
 pub fn ListCommands() {
-    let mut commands = vec!["list - Displays this message", "select-account (account name) - Selects an account", "create-account - Creates an account"];
+    let mut commands = vec!["help - Displays this message", "select-account (account name) - Selects an account", "create-account - Creates an account"];
 
     println!("--- Clidget Commands ---");
     for line in commands.iter() {
