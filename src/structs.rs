@@ -50,7 +50,6 @@ pub fn GenerateAccountFromInput() -> Account {
         String::from("savings") => accndtpe = AccountType::Savings,
         String::from("retirement") => accndtpe = AccountType::Retirement,
         String::from("roth") => accndtpe = AccountType::Roth,
-        String::from("roth") => accndtpe = AccountType::Roth,
         _ => AccountType::EMPTY
     }
 
