@@ -5,6 +5,7 @@ use std::io::Write;
 use std::process;
 use std::process::Command;
 use serde_json::to_string;
+use crate::structs::{Account, ImportAccounts};
 
 mod systemhandler;
 mod structs;
@@ -30,6 +31,8 @@ fn MainProgram() {
     loop {
         println!("vv Clidget [help to list commands] vv");
         io::stdin().read_line(&mut input);
+
+        let mut AccountList: Vec<Account> = ImportAccounts();
 
         match input.to_lowercase().trim() {
             "help" => ListCommands(),

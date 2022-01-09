@@ -25,7 +25,7 @@ pub struct Transaction {
 }
 
 //Account functions
-pub fn AddBudgetToAccount(accnt: Account, budget: Budget) -> Account {
+pub fn AddBudgetToAccount(accnt: Account, budget: Budget) {
     let mut accnttochange = accnt;
 
     let ret: Account = Account {
