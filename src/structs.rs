@@ -3,6 +3,7 @@ use serde::{Serialize, Deserialize};
 use serde_json::Value::{Null, String};
 use std::io;
 
+#[derive(Serialize, Deserialize, Debug)]
 pub struct Account {
     pub Name: String,
     pub Amount: i128,
@@ -10,17 +11,29 @@ pub struct Account {
     pub Account_Type: AccountType
 }
 
+#[derive(Serialize, Deserialize, Debug)]
 pub struct Budget {
     pub Amount_Initial: i128,
     pub Amount_Left: i128
 }
 
+#[derive(Serialize, Deserialize, Debug)]
 pub struct Transaction {
     pub Title: String,
     pub Amount: i128
 }
 
 //Account functions
+pub fn GenerateAccountFromJson(accnt: String) -> Account {
+    let mut ret: Account = serde_json::from_str(&accnt).unwrap();
+    return ret;
+}
+
+pub fn AccountToJson(accnt: Account) -> String {
+    let mut ret: String = serde_json::to_string(&accnt).unwrap();
+    return ret;
+}
+
 pub fn GenerateAccountFromInput() -> Account {
     let mut nme = String::new();
 
