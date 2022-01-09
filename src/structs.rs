@@ -1,6 +1,7 @@
 use std::borrow::Borrow;
 use serde::{Serialize, Deserialize};
 use serde_json::Value::{Null, String};
+use std::io;
 
 pub struct Account {
     pub Name: String,
@@ -26,10 +27,12 @@ pub fn GenerateAccountFromInput() -> Account {
     println!("vv Enter the account name vv");
     io::stdin().read_line(&mut nme);
 
-    let mut amnt: i128 = 0;
+    let mut stramnmt: String = String::from("0");
 
     println!("vv Enter the account amount [default is 0] vv");
-    io::stdin().read_line(&mut amnt);
+    io::stdin().read_line(&mut stramnmt);
+
+    let mut amnt: i128 = stramnmt.parse::<i128>().unwrap();
 
     let mut bdgt = Budget {
         Amount_Initial: 0,
@@ -40,7 +43,7 @@ pub fn GenerateAccountFromInput() -> Account {
     let mut typestraccnt = String::new();
 
     println!("vv Enter the account type vv");
-    io::stdin().read_line(&mut amnt);
+    io::stdin().read_line(&mut typestraccnt);
 
     match typestraccnt.to_lowercase() {
         String::from("checking") => accndtpe = AccountType::Checking,
