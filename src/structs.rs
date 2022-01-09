@@ -87,6 +87,7 @@ pub fn GenerateAccountFromInput() -> Account {
 //Transaction Functions
 
 //ENUMS AND ENUM FUNCTIONS
+#[derive(Serialize, Deserialize, Debug)]
 pub enum AccountType {
     Checking,
     Savings,
