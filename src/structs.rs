@@ -25,7 +25,20 @@ pub struct Transaction {
 }
 
 //Account functions
-pub fn ProcessTransaction(accnt: Account, tr: Transaction) -> Account{
+pub fn AddBudgetToAccount(accnt: Account, budget: Budget) -> Account {
+    let mut accnttochange = accnt;
+
+    let ret: Account = Account {
+      Name: accnttochange.Name,
+      Amount: accnttochange.Amount,
+      Budget: budget,
+      Account_Type: accnttochange.Account_Type
+    };
+
+    UpdateAccount(ret);
+}
+
+pub fn ProcessTransaction(accnt: Account, tr: Transaction) {
     let mut toProcess = &tr;
 
     let mut newBal: i128 = accnt.Amount - toProcess.Amount;
@@ -37,7 +50,7 @@ pub fn ProcessTransaction(accnt: Account, tr: Transaction) -> Account{
         Account_Type: accnt.Account_Type
     };
 
-    return ret;
+    UpdateAccount(ret);
 }
 
 pub fn ImportAccounts() -> Vec<Account>{
