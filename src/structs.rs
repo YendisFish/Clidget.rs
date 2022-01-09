@@ -25,6 +25,21 @@ pub struct Transaction {
 }
 
 //Account functions
+pub fn ProcessTransaction(accnt: Account, tr: Transaction) -> Account{
+    let mut toProcess = &tr;
+
+    let mut newBal: i128 = accnt.Amount - toProcess.Amount;
+
+    let mut ret: Account = Account {
+        Name: accnt.Name,
+        Amount: newBal,
+        Budget: accnt.Budget,
+        Account_Type: accnt.Account_Type
+    };
+
+    return ret;
+}
+
 pub fn ImportAccounts() -> Vec<Account>{
     let mut dirFiles= fs::read_dir("/etc/Clidget/Core/Accounts/").unwrap();
     let mut dirStr: Vec<String> = Vec::new();
@@ -49,7 +64,13 @@ pub fn ImportAccounts() -> Vec<Account>{
     return accounts;
 }
 
-pub fn CreateAccount(accnttocreate: Account) {
+pub fn UpdateAccount(accnt: Account) {
+    fs::remove_dir("/etc/Clidget/Core/Accounts".to_string() + &accnt.Name + &"/" + &accnt.Name + "/");
+
+    CreateAccount(&accnt)
+}
+
+pub fn CreateAccount(accnttocreate: &Account) {
     let parsed: String = AccountToJson(&accnttocreate);
     let mut dirStr: String = "/etc/Clidget/Core/Accounts/".to_string() + &accnttocreate.Name + &"/" + &accnttocreate.Name + &"/".to_string() + &".json";
 
