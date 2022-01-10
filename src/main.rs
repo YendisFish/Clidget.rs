@@ -25,8 +25,6 @@ fn main() {
     }
 }
 
-pub const AccountList: Vec<Account> = ImportAccounts();
-
 fn MainProgram() {
     let mut input: String = String::new();
 
@@ -37,40 +35,45 @@ fn MainProgram() {
         match input.to_lowercase().trim() {
             "help" => ListCommands(),
             "select-account" => UpdateAccountListAndSelect(),
+            "list" => println!("ADD LIST ACCOUNTS FUNCITON"),
             _ => {}
         }
 
-        fn UpdateAccountListAndSelect() {
-            AccountList = ImportAccounts();
-
+        pub fn UpdateAccountListAndSelect() {
             let mut inp = String::new();
+            let mut AccountList: Vec<Account> = ImportAccounts();
 
             println!("vv Enter Account Name to Select vv");
             io::stdin().read_line(&mut inp);
 
             for x in AccountList {
-                let nxo = &x;
-
-                if nxo.Name == inp {
+                if x.Name == inp {
                     AccountHandler(x);
                 }
             }
+        }
+
+         fn ListCommands() {
+            let mut commands = vec!["help - Displays this message", "select-account (account name) - Selects an account", "create-account - Creates an account"];
+
+            println!("--- Clidget Commands ---");
+            for line in commands.iter() {
+                println!("{}", line);
+            }
+            println!("-------------------------");
         }
 
         input = String::from("");
     }
 }
 
-pub fn ListCommands() {
-    let mut commands = vec!["help - Displays this message", "select-account (account name) - Selects an account", "create-account - Creates an account"];
 
-    println!("--- Clidget Commands ---");
-    for line in commands.iter() {
-        println!("{}", line);
-    }
-    println!("-------------------------");
-}
 
 pub fn AccountHandler(accnt: Account) {
+    let mut input: String = String::new();
 
+    loop {
+        println!("vv {} vv", accnt.Name);
+        io::stdin().read_line(&mut input);
+    }
 }
