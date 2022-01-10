@@ -1,7 +1,8 @@
 use crate::systemhandler::{Installer};
 use std::env;
 use std::io;
-use std::io::Write;
+use std::io::{Read, Write};
+use std::iter::from_fn;
 use std::process;
 use std::process::Command;
 use serde_json::to_string;
