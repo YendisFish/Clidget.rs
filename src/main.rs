@@ -25,6 +25,8 @@ fn main() {
     }
 }
 
+pub const AccountList: Vec<Account> = ImportAccounts();
+
 fn MainProgram() {
     let mut input: String = String::new();
 
@@ -32,12 +34,27 @@ fn MainProgram() {
         println!("vv Clidget [help to list commands] vv");
         io::stdin().read_line(&mut input);
 
-        let mut AccountList: Vec<Account> = ImportAccounts();
-
         match input.to_lowercase().trim() {
             "help" => ListCommands(),
-            "select-account" => println!("PUT FUNCTION HERE"),
+            "select-account" => UpdateAccountListAndSelect(),
             _ => {}
+        }
+
+        pub fn UpdateAccountListAndSelect() {
+            AccountList = ImportAccounts();
+
+            let mut inp = String::new();
+
+            println!("vv Enter Account Name to Select vv");
+            io::stdin().read_line(&mut inp);
+
+            for x in AccountList {
+                let nxo = &x;
+
+                if nxo.Name == inp {
+                    AccountHandler(x);
+                }
+            }
         }
 
         input = String::from("");
@@ -52,4 +69,8 @@ pub fn ListCommands() {
         println!("{}", line);
     }
     println!("-------------------------");
+}
+
+pub fn AccountHandler(accnt: Account) {
+
 }
