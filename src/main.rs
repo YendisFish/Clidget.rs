@@ -40,7 +40,7 @@ fn MainProgram() {
             _ => {}
         }
 
-        pub fn UpdateAccountListAndSelect() {
+        fn UpdateAccountListAndSelect() {
             AccountList = ImportAccounts();
 
             let mut inp = String::new();
